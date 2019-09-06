@@ -4,7 +4,7 @@ Remote pulse rate measurement from facial video has gained particular attention 
 
 This repository contains the source codes related to a new framework for measuring and mapping pulse rate from video. The method, which relies on convolutional 3D networks, is fully automatic and does not require any special image pre-processing. The network ensures concurrent mapping by producing a prediction for each local group of pixels. 
 
-The volume of either uncompressed and labeled (with reference pulse rate values) video data being very limited to train this type of machine learning models, we propose a pseudo-PPG synthetic video generator, also contained in this repository.
+The volume of either uncompressed and labeled (with reference pulse rate values) video data being very limited to train this type of machine learning models, we propose a pseudo-PPG synthetic video generator (also contained in this repository).
 
 
 ## Reference
