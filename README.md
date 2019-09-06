@@ -23,6 +23,5 @@ This repository contains two sub-repository:
 
 
 [Learn more about READMEs](https://help.github.com/en/articles/about-readmes)
-
-<img width="1039" alt="rename_screenshot" src="illustrations/overview.pdf">
+![Alt text](illustrations/overview.pdf?raw=true "Imaging PPG pipeline.")
 
