@@ -6,6 +6,11 @@ This repository contains the source codes related to a new framework for measuri
 
 The volume of either uncompressed and labeled (with reference pulse rate values) video data being very limited to train this type of machine learning models, we propose a pseudo-PPG synthetic video generator (also contained in this repository).
 
+![Alt text](illustrations/overview.png?raw=true "General overview")
+
+![Alt text](illustrations/network_architecture.png?raw=true "General overview")
+
+![Alt text](illustrations/synthetic_generator.png?raw=true "General overview")
 
 ## Reference
 
@@ -17,11 +22,12 @@ Frédéric Bousefsaf, Alain Pruski, Choubeila Maaoui, **3D convolutional neural 
 Please refer to the original publication to get all the details. 
 
 
+
+
 ## Usage
 This repository contains two sub-repository:
 
 
 
-[Learn more about READMEs](https://help.github.com/en/articles/about-readmes)
-![Alt text](illustrations/overview.png?raw=true "Imaging PPG pipeline.")
+
 
