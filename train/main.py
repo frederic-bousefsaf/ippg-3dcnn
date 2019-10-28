@@ -1,21 +1,22 @@
 ## UNCOMMENTING THESE TWO LINES WILL FORCE KERAS/TF TO RUN ON CPU
 #import os
 #os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
 import tensorflow as tf
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.callbacks import ModelCheckpoint
 from tensorflow.python.keras.models import model_from_json
 from tensorflow.python.keras.layers import ZeroPadding3D, Dense, Activation,Conv3D,MaxPooling3D,AveragePooling3D,Flatten,Dropout
+
 #from tensorflow.python.keras.utils import np_utils
 from tensorflow.python.keras._impl.keras.utils import np_utils
+
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
 import os
 import scipy.io
 import generate_trend
-
-# np.random.seed(8)
 
 
 # CONSTANTS
@@ -43,8 +44,7 @@ a2 = -0.050159136439220
 b2 = 0.099347477830878
 w = 2 * np.pi
 
-HEART_RATES = np.linspace(55, 150, 39)
-# HEART_RATES = np.linspace(55, 240, 75)
+HEART_RATES = np.linspace(55, 240, 75)
 NB_CLASSES = len(HEART_RATES)
 
 # prepare labels and label categories
@@ -55,7 +55,7 @@ for i in range(NB_CLASSES + 1):
 labels_cat = np_utils.to_categorical(labels)
 
 
-EPOCHS = 1000
+EPOCHS = 5000
 CONTINUE_TRAINING = False
 SAVE_ALL_MODELS = False
 train_loss = []
@@ -116,7 +116,7 @@ for i_freq in range(len(HEART_RATES)):
         signal = signal - np.min(signal)
         signal = signal / np.max(signal)
 
-        r = np.random.randint(low=0, high=len(TENDANCIES_MAX))      # high value is not comprised (exclusive)
+        r = np.random.randint(low=0, high=len(TENDANCIES_MAX))
         trend = generate_trend.generate_trend(len(t), TENDANCIES_ORDER[r], 0, np.random.uniform(low=TENDANCIES_MIN[r], high=TENDANCIES_MAX[r]), np.random.randint(low=0, high=2))
 
         signal = np.expand_dims(signal + trend, 1)
@@ -139,8 +139,7 @@ for i_freq in range(len(HEART_RATES)):
         ytest[c] = labels_cat[i_freq]
 
         c = c + 1
-        #data['new'] = xtest[0:c-1,:,:,:,0]
-        #scipy.io.savemat('D:/Users/bousefsa1/Desktop/new.mat', data)
+
 
 # constant image noise (gaussian distribution)
 for i_videos in range(NB_VIDEOS_BY_CLASS_TEST):
@@ -158,15 +157,6 @@ for i_videos in range(NB_VIDEOS_BY_CLASS_TEST):
     c = c + 1
 
 print('Test data generation done')
-
-## Load test data from matlab file
-#tt = scipy.io.loadmat('D:/Users/bousefsa1/Desktop/matlab.mat')
-#xtest = np.expand_dims(tt['x'],5)
-#for i_videos in range(xtest.shape[0]):
-#    xtest[i_videos] = xtest[i_videos] - np.mean(xtest[i_videos])
-
-#ytest = labels_cat[tt['y']]
-#ytest = ytest[0]
 
 
 
@@ -186,7 +176,7 @@ for batch_nb in range(init_batch_nb, EPOCHS):
             signal = signal - np.min(signal)
             signal = signal / np.max(signal)
 
-            r = np.random.randint(low=0, high=len(TENDANCIES_MAX))      # high value is not comprised (exclusive)
+            r = np.random.randint(low=0, high=len(TENDANCIES_MAX))
             trend = generate_trend.generate_trend(len(t), TENDANCIES_ORDER[r], 0, np.random.uniform(low=TENDANCIES_MIN[r], high=TENDANCIES_MAX[r]), np.random.randint(low=0, high=2))
 
             signal = np.expand_dims(signal + trend, 1)
@@ -213,7 +203,7 @@ for batch_nb in range(init_batch_nb, EPOCHS):
 
     # constant image noise (gaussian distribution)
     for i_videos in range(NB_VIDEOS_BY_CLASS_TRAIN):
-        r = np.random.randint(low=0, high=len(TENDANCIES_MAX))      # high value is not comprised (exclusive)
+        r = np.random.randint(low=0, high=len(TENDANCIES_MAX))
         trend = generate_trend.generate_trend(len(t), TENDANCIES_ORDER[r], 0, np.random.uniform(low=TENDANCIES_MIN[r], high=TENDANCIES_MAX[r]), np.random.randint(low=0, high=2))
 
         # add a tendancy on noise
