@@ -56,7 +56,7 @@ This repository contains two sub-repository: **train** and **predict**
 
 
 ### predict
-`main.py` first display an UI that allows selection of the path that contains the frames (extension: .png, format: %04d starting from 0000, e.g. 0000.png - 0001.png - 0002.png...).
+`main.py` first display an UI that allows selection of the folder that contains the frames (extension: .png, format: %04d starting from 0000, e.g. 0000.png - 0001.png - 0002.png...).
 
 **Variables and hyperparameters**
 - `DIR_SAVE`: save directory. The predictions will be saved in a Matlab format (.mat) in this path
