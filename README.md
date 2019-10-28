@@ -47,8 +47,16 @@ This repository contains two sub-repository: **train** and **predict**
 
 ### train
 `main.py` is a standalone program that creates the network architecture and the synthetic data before launching training. The code saves the architecture (.json) and weights (.h5) as well as statistics (training / validation loss and accuracy) at the end of the procedure.
-**Variables**
-NB_VIDEOS_BY_CLASS_TRAIN and NB_VIDEOS_BY_CLASS_VALIDATION: number of synthetic videos (a video is a tensor of size 25 x 25 x 60) generated for training and validation.
+
+**Variables and hyperparameters**
+- NB_VIDEOS_BY_CLASS_TRAIN and NB_VIDEOS_BY_CLASS_VALIDATION: number of synthetic videos (a video is a tensor of size 25 x 25 x 60) that will be generated and used for training and validation.
+- EPOCHS, 5000 by default
+- CONTINUE_TRAINING: False to start training from scratch (weights are randomly initialized), True to resume training
+- SAVE_ALL_MODELS: False to save only the model that presents the highest validation accuracy
+
 
 ### predict
 `main.py` first display an UI that allows selection of the path that contains the frames (extension: .png, format: %04d starting from 0000, e.g. 0000.png - 0001.png - 0002.png...).
+**Variables and hyperparameters**
+- DIR_SAVE: save directory. The predictions will be saved in a Matlab format (.mat) in this path
+- USE_RANDOM_PIXEL_LOCATION: 1 by default. 0 to disable shuffle of pixel positions.
