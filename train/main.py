@@ -21,7 +21,7 @@ import generate_trend
 
 # CONSTANTS
 NB_VIDEOS_BY_CLASS_TRAIN = 200
-NB_VIDEOS_BY_CLASS_TEST = 200
+NB_VIDEOS_BY_CLASS_VALIDATION = 200
 
 # Tendencies (linear, 2nd order, 3rd order)
 TENDANCIES_MIN = (-3,-1,-1)
@@ -100,16 +100,16 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accur
 
 data = {}
 
-# 2.  GENERATE TEST DATA
-xtest = np.zeros(shape=((NB_CLASSES + 1) * NB_VIDEOS_BY_CLASS_TEST, LENGTH_VIDEO, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS))
-ytest = np.zeros(shape=((NB_CLASSES + 1) * NB_VIDEOS_BY_CLASS_TEST, NB_CLASSES + 1))
+# 2.  GENERATE VALIDATION DATA
+xvalidation = np.zeros(shape=((NB_CLASSES + 1) * NB_VIDEOS_BY_CLASS_VALIDATION, LENGTH_VIDEO, IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_CHANNELS))
+yvalidation = np.zeros(shape=((NB_CLASSES + 1) * NB_VIDEOS_BY_CLASS_VALIDATION, NB_CLASSES + 1))
 
 c = 0
 
 # for each frequency
 for i_freq in range(len(HEART_RATES)):
 
-    for i_videos in range(NB_VIDEOS_BY_CLASS_TEST):
+    for i_videos in range(NB_VIDEOS_BY_CLASS_VALIDATION):
 
         t2 = t + (np.random.randint(low=0, high=33) * SAMPLING)   # phase. 33 corresponds to a full phase shift for HR=55 bpm
         signal = a0 + a1 * np.cos(t2 * w * HEART_RATES[i_freq] / 60) + b1 * np.sin(t2 * w * HEART_RATES[i_freq] / 60) + a2 * np.cos(2 * t2 * w * HEART_RATES[i_freq] / 60) + b2 * np.sin(2 * t2 * w * HEART_RATES[i_freq] / 60)
@@ -133,17 +133,17 @@ for i_freq in range(len(HEART_RATES)):
         for j in range(0, LENGTH_VIDEO):
             temp = 255 * ((amplitude * img[:,:,j]) + np.random.normal(size=(IMAGE_HEIGHT, IMAGE_WIDTH), loc=0.5, scale=0.25) * noise_energy)
             temp[temp < 0] = 0 
-            xtest[c,j,:,:,0] = temp.astype('uint8') / 255.0
+            xvalidation[c,j,:,:,0] = temp.astype('uint8') / 255.0
 
-        xtest[c] = xtest[c] - np.mean(xtest[c])
-        ytest[c] = labels_cat[i_freq]
+        xvalidation[c] = xvalidation[c] - np.mean(xvalidation[c])
+        yvalidation[c] = labels_cat[i_freq]
 
         c = c + 1
 
 
 # constant image noise (gaussian distribution)
-for i_videos in range(NB_VIDEOS_BY_CLASS_TEST):
-    r = np.random.randint(low=0, high=len(TENDANCIES_MAX))      # high value is not comprised (exclusive)
+for i_videos in range(NB_VIDEOS_BY_CLASS_VALIDATION):
+    r = np.random.randint(low=0, high=len(TENDANCIES_MAX))
     trend = generate_trend.generate_trend(len(t), TENDANCIES_ORDER[r], 0, np.random.uniform(low=TENDANCIES_MIN[r], high=TENDANCIES_MAX[r]), np.random.randint(low=0, high=2))
 
     # add a tendancy on noise
@@ -151,9 +151,9 @@ for i_videos in range(NB_VIDEOS_BY_CLASS_TEST):
     img = np.tile(signal, (IMAGE_WIDTH, 1, IMAGE_HEIGHT)) / (IMAGE_HEIGHT * IMAGE_WIDTH)
     img = np.expand_dims(np.transpose(img, axes=(1,0,2)), 3)
 
-    xtest[c] = np.expand_dims(np.random.normal(size=(LENGTH_VIDEO, IMAGE_HEIGHT, IMAGE_WIDTH)) / 50, 3) + img
-    xtest[c] = xtest[c] - np.mean(xtest[c])
-    ytest[c] = labels_cat[NB_CLASSES]
+    xvalidation[c] = np.expand_dims(np.random.normal(size=(LENGTH_VIDEO, IMAGE_HEIGHT, IMAGE_WIDTH)) / 50, 3) + img
+    xvalidation[c] = xvalidation[c] - np.mean(xvalidation[c])
+    yvalidation[c] = labels_cat[NB_CLASSES]
     c = c + 1
 
 print('Test data generation done')
@@ -223,7 +223,7 @@ for batch_nb in range(init_batch_nb, EPOCHS):
     train_loss.append(history[0])
     train_acc.append(history[1])
 
-    history = model.evaluate(xtest, ytest, verbose=2)
+    history = model.evaluate(xvalidation, yvalidation, verbose=2)
     
 
     # A. Save the model only if the accuracy is greater than before
@@ -286,7 +286,7 @@ plt.plot(val_acc)
 plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
+plt.legend(['training', 'validation'], loc='upper left')
 
 # plot history for loss
 plt.subplot(212)
@@ -295,7 +295,7 @@ plt.plot(val_loss)
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
+plt.legend(['training', 'validation'], loc='upper left')
 
 plt.tight_layout()
 plt.show()
