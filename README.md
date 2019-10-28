@@ -13,7 +13,7 @@ The volume of either uncompressed and labeled (with reference pulse rate values)
 ## Reference
 
 If you find this code useful or use it in an academic or research project, please cite it as: 
-Frédéric Bousefsaf, Alain Pruski, Choubeila Maaoui, **3D convolutional neural networks for remote pulse rate measurement and mapping from facial video**, Journal, 2019.
+Frédéric Bousefsaf, Alain Pruski, Choubeila Maaoui, **3D convolutional neural networks for remote pulse rate measurement and mapping from facial video**, *Applied Sciences*, vol. 9, n° 20, 4364 (2019). [Link](https://www.mdpi.com/2076-3417/9/20/4364)
 
 
 ## Scientific description
