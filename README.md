@@ -38,6 +38,7 @@ The different packages must be installed to properly run the codes :
 - `pip install tensorflow` (or `tensorflow-gpu`)
 - `pip install opencv-python`
 - `pip install matplotlib`
+- `pip install scipy`
 
 
 ## Usage
