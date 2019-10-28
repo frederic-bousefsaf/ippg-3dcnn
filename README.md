@@ -44,3 +44,11 @@ The different packages must be installed to properly run the codes :
 ## Usage
 
 This repository contains two sub-repository: **train** and **predict** 
+
+### train
+`main.py` is a standalone program that creates the network architecture and the synthetic data before launching training. The code saves the architecture (.json) and weights (.h5) as well as statistics (training / validation loss and accuracy) at the end of the procedure.
+**Variables**
+NB_VIDEOS_BY_CLASS_TRAIN and NB_VIDEOS_BY_CLASS_VALIDATION: number of synthetic videos (a video is a tensor of size 25 x 25 x 60) generated for training and validation.
+
+### predict
+`main.py` first display an UI that allows selection of the path that contains the frames (extension: .png, format: %04d starting from 0000, e.g. 0000.png - 0001.png - 0002.png...).
