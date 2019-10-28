@@ -2,12 +2,13 @@
 #import os
 #os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
-
 import tensorflow as tf
 from tensorflow.python.keras.models import Sequential
 from tensorflow.python.keras.models import model_from_json
+
 from tensorflow.python.keras._impl.keras.utils import np_utils
 # from tensorflow.python.keras.utils import np_utils
+
 import numpy as np
 import scipy.io
 import scipy.stats as sp
@@ -19,13 +20,10 @@ import os
 from copy import copy
 
 
-# np.random.seed(8)
-
-
 root = tk.Tk()
 root.withdraw()
 DIR_TESTING_DATA = filedialog.askdirectory(initialdir='D:/images/')
-DIR_SAVE = 'D:/Users/bousefsa1/Desktop/results/'
+DIR_SAVE = 'D:/SAVE_DIR/'
 
 if(DIR_TESTING_DATA==''):
     exit()
@@ -52,13 +50,13 @@ else:
 
 
 # 1. LOAD PRETRAINED MODEL
-model = model_from_json(open('D:/Users/bousefsa1/Desktop/model_conv3D.json').read())
-model.load_weights('D:/Users/bousefsa1/Desktop/weights_conv3D.h5')
+model = model_from_json(open('model_conv3D.json').read())
+model.load_weights('weights_conv3D.h5')
 model.summary()
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # define the frequencies // output dimension (number of classes used during training)
-freq_BPM = np.linspace(55, 150, num=model.output_shape[1]-1)
+freq_BPM = np.linspace(55, 240, num=model.output_shape[1]-1)
 freq_BPM = np.append(freq_BPM, -1)     # noise class
 
 # define patch size and number of images per video (directly from the model information)
@@ -90,7 +88,7 @@ p_map = np.zeros(shape=(NB_TOTAL_IMAGES_PER_VIDEO_TESTING - NB_SELECTED_IMAGES_P
 
 for m in range(0, IMAGE_WIDTH-PATCH_WIDTH+1):
     for n in range(0, IMAGE_HEIGHT-PATCH_HEIGHT+1):
-        patch = copy(imgs[:,n:n+PATCH_HEIGHT,m:m+PATCH_WIDTH,:])        # NEED TO COPY BECAUSE patch = imgs[...] does not copy the content but acts like a pointer (only reference is copied)
+        patch = copy(imgs[:,n:n+PATCH_HEIGHT,m:m+PATCH_WIDTH,:])
         
         # randomize pixel locations
         if (USE_RANDOM_PIXEL_LOCATION==1):
@@ -115,21 +113,3 @@ if (not os.path.isdir(DIR_SAVE)):
 data = {}
 data['map_p'] = p_map
 scipy.io.savemat(DIR_SAVE + 'results.mat', data)
-
-
-#for j in range(NB_TOTAL_IMAGES_PER_VIDEO_TESTING - NB_SELECTED_IMAGES_PER_VIDEO + 1):
-    ## save matplotlib figures
-    #plt.imshow(p_map[j,:,:])
-    #plt.colorbar()
-    #plt.savefig(DIR_SAVE + '/p%04d.png' % j)
-    #plt.clf()   # clear figure (progressive stack of colorbars otherwise)
-
-    #plt.imshow(e_map[j,:,:])
-    #plt.colorbar()
-    #plt.savefig(DIR_SAVE + '/e%04d.png' % j)
-    #plt.clf()
-
-    #plt.imshow(m_map[j,:,:])
-    #plt.colorbar()
-    #plt.savefig(DIR_SAVE + '/m%04d.png' % j)
-    #plt.clf()
