@@ -42,4 +42,4 @@ The different packages must be installed to properly run the codes :
 
 ## Usage
 
-This repository contains two sub-repository: **learn** and **predict** 
+This repository contains two sub-repository: **train** and **predict** 
