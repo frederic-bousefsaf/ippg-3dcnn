@@ -57,6 +57,9 @@ This repository contains two sub-repository: **train** and **predict**
 
 ### predict
 `main.py` first display an UI that allows selection of the path that contains the frames (extension: .png, format: %04d starting from 0000, e.g. 0000.png - 0001.png - 0002.png...).
+
 **Variables and hyperparameters**
 - DIR_SAVE: save directory. The predictions will be saved in a Matlab format (.mat) in this path
 - USE_RANDOM_PIXEL_LOCATION: 1 by default. 0 to disable shuffle of pixel positions.
+
+** *Please note that we will update the latest version of the codes soon* **
