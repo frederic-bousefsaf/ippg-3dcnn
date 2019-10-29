@@ -56,7 +56,7 @@ This repository contains two sub-repository: **train** and **predict**
 
 
 ### predict
-`main.py` first display an UI that allows selection of the folder that contains the frames. The program will load all the files in the selected directory so it mus contains only image files. (e.g. 0000.png; 0001.png; 0002.png...).
+`main.py` first display an UI that allows selection of the folder that contains the images. The program will load all the files in the selected directory so it must contain only image files. (e.g. 0000.png; 0001.png; 0002.png...).
 
 **Variables and hyperparameters**
 - `DIR_SAVE`: save directory. The predictions will be saved in a Matlab format (.mat) in this path.
