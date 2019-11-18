@@ -36,7 +36,7 @@ A suitable amount of synthetic data ensures proper training and validation of ma
 ## Requirements
 The codes were tested with Python 3.5/3.6 and Tensorflow + Keras frameworks.
 
-The different packages must be installed to properly run the codes : 
+Different packages must be installed to properly run the codes : 
 - `pip install tensorflow` (or `tensorflow-gpu`)
 - `pip install opencv-python`
 - `pip install matplotlib`
