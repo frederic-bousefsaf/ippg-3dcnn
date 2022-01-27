@@ -62,6 +62,6 @@ This repository contains two sub-repository: **train** and **predict**
 
 **Variables and hyperparameters**
 - `DIR_SAVE`: save directory. The predictions will be saved in a Matlab format (.mat) in this path.
-- `USE_RANDOM_PIXEL_LOCATION`: 1 by default. 0 to disable shuffle of pixel positions.
+- `USE_RANDOM_PIXEL_LOCATION`: 1 by default. 0 to disable shuffle of pixel positions. 
 
 ***Please note that the codes provided in these subdirectories are temporary. We will update the latest versions soon.***
